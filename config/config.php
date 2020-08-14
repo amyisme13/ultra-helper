@@ -1,8 +1,6 @@
 <?php
 
-/*
- * You can place your custom package configuration in here.
- */
 return [
-
+    'url' => env('ULTRA_URL'),
+    'signature_key' => env('ULTRA_SIGNATURE_KEY'),
 ];
