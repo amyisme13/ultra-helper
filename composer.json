@@ -1,0 +1,54 @@
+{
+    "name": "amyisme13/ultra-helper",
+    "description": "A personal package for undisclosed usage :)",
+    "keywords": [
+        "amyisme13",
+        "ultra-helper"
+    ],
+    "homepage": "https://github.com/amyisme13/ultra-helper",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Azmi Makarima",
+            "email": "amy.azmim@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Amyisme13\\UltraHelper\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Amyisme13\\UltraHelper\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Amyisme13\\UltraHelper\\UltraHelperServiceProvider"
+            ],
+            "aliases": {
+                "UltraHelper": "Amyisme13\\UltraHelper\\UltraHelperFacade"
+            }
+        }
+    }
+}
