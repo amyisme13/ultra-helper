@@ -42,7 +42,7 @@ use Amyisme13\UltraHelper\UltraHelperFacade as UltraHelper;
 
 $userData = UltraHelper::login('username', 'password');
 
-$userData = UltraHelper::loginWithToken('username', 'password');
+$userData = UltraHelper::loginWithToken('encrypted-token');
 ```
 
 ## Testing
