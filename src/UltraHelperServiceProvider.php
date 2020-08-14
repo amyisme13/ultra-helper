@@ -16,13 +16,18 @@ class UltraHelperServiceProvider extends ServiceProvider
          */
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'ultra-helper');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'ultra-helper');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('ultra-helper.php'),
             ], 'config');
+
+            // Publishing the migrations.
+            // $this->publishes([
+            //     __DIR__ . '/../database/migrations/' => database_path('migrations'),
+            // ], 'migrations');
 
             // Publishing the views.
             /*$this->publishes([
