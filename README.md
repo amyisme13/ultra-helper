@@ -10,19 +10,48 @@ You can install the package via composer:
 composer require amyisme13/ultra-helper
 ```
 
-## Usage
+Run the migration
 
-```php
-// Usage description here
+```bash
+php artisan migrate
 ```
 
-### Testing
+Configure these environment variable
+
+- ULTRA_URL
+- ULTRA_SIGNATURE_KEY
+- ULTRA_ENCRYPTION_KEY
+- ULTRA_ENCRYPTION_IV
+
+## Features
+
+### Users Sync
+
+Sync ultra_users table with the current Ultra users
+
+```bash
+php artisan ultra-helper:sync-users
+```
+
+### Login
+
+Login using username & password or using token. These methods will return user data object.
+
+```php
+use Amyisme13\UltraHelper\UltraHelperFacade as UltraHelper;
+
+$userData = UltraHelper::login('username', 'password');
+
+$userData = UltraHelper::loginWithToken('username', 'password');
+```
+
+## Testing
 
 ```bash
 composer test
 ```
 
-### Changelog
+## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
