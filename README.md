@@ -1,11 +1,6 @@
-# Very short description of the package
+# ultra-helper
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/amyisme13/ultra-helper.svg?style=flat-square)](https://packagist.org/packages/amyisme13/ultra-helper)
-[![Build Status](https://img.shields.io/travis/amyisme13/ultra-helper/master.svg?style=flat-square)](https://travis-ci.org/amyisme13/ultra-helper)
-[![Quality Score](https://img.shields.io/scrutinizer/g/amyisme13/ultra-helper.svg?style=flat-square)](https://scrutinizer-ci.com/g/amyisme13/ultra-helper)
-[![Total Downloads](https://img.shields.io/packagist/dt/amyisme13/ultra-helper.svg?style=flat-square)](https://packagist.org/packages/amyisme13/ultra-helper)
-
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+A personal package for undisclosed usage.
 
 ## Installation
 
@@ -17,13 +12,13 @@ composer require amyisme13/ultra-helper
 
 ## Usage
 
-``` php
+```php
 // Usage description here
 ```
 
 ### Testing
 
-``` bash
+```bash
 composer test
 ```
 
@@ -41,8 +36,8 @@ If you discover any security related issues, please email amy.azmim@gmail.com in
 
 ## Credits
 
-- [Azmi Makarima](https://github.com/amyisme13)
-- [All Contributors](../../contributors)
+-   [Azmi Makarima](https://github.com/amyisme13)
+-   [All Contributors](../../contributors)
 
 ## License
 
