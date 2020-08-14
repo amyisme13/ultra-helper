@@ -3,8 +3,8 @@
 namespace Amyisme13\UltraHelper;
 
 use Amyisme13\UltraHelper\Exceptions\AuthFailedException;
+use Amyisme13\UltraHelper\Exceptions\InvalidSignatureException;
 use Amyisme13\UltraHelper\Exceptions\UltraErrorException;
-use Illuminate\Routing\Exceptions\InvalidSignatureException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 

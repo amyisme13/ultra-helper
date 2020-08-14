@@ -4,7 +4,7 @@ namespace Amyisme13\UltraHelper\Exceptions;
 
 use Exception;
 
-class UltraErrorException extends Exception
+class InvalidSignatureException extends Exception
 {
     public function __construct()
     {
