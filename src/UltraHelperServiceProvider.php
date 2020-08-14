@@ -2,6 +2,7 @@
 
 namespace Amyisme13\UltraHelper;
 
+use Amyisme13\UltraHelper\Console\SyncUsers;
 use Illuminate\Support\ServiceProvider;
 
 class UltraHelperServiceProvider extends ServiceProvider
@@ -45,7 +46,9 @@ class UltraHelperServiceProvider extends ServiceProvider
             ], 'lang');*/
 
             // Registering package commands.
-            // $this->commands([]);
+            $this->commands([
+                SyncUsers::class,
+            ]);
         }
     }
 
