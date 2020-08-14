@@ -5,7 +5,7 @@ namespace Amyisme13\UltraHelper;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Amyisme13\UltraHelper\Skeleton\SkeletonClass
+ * @see \Amyisme13\UltraHelper\UltraHelper
  */
 class UltraHelperFacade extends Facade
 {

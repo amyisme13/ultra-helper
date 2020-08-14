@@ -30,11 +30,4 @@ abstract class AuthUserData {
      * @var string
      */
     public $name;
-
-    /**
-     * Whether the user is admin or not
-     *
-     * @var bool
-     */
-    public $admin;
 }

@@ -59,6 +59,32 @@ class UltraHelper
     }
 
     /**
+     * Login using encrypted token
+     *
+     * @param string $token
+     * @return \Amyisme13\UltraHelper\Contracts\AuthUserData
+     */
+    public function loginWithToken($token)
+    {
+        $data = Encryption::decrypt($token);
+        if (!$data) {
+            throw new AuthFailedException('Invalid token');
+        }
+
+        $json = json_decode($data);
+        if ($json->timeCreated < now()->subHour()->timestamp) {
+            throw new AuthFailedException('Token expired');
+        }
+
+        return (object) [
+            'id' => $json->id,
+            'username' => $json->username,
+            'email' => $json->email,
+            'name' => $json->fullname,
+        ];
+    }
+
+    /**
      * Get users from Ultra.
      *
      * @param int $page
