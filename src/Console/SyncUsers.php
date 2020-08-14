@@ -72,8 +72,8 @@ class SyncUsers extends Command
                             'sub_area' => $user['sub_area'],
                             'costcenter' => $user['costcenter'],
                             'top_username' => $user['top_id'] ? $user['top_id'] : null,
-                            'activated_at' => Carbon::parse($user['activated_on']),
-                            'suspended' => $user['suspended'],
+                            'activated_at' => Carbon::parse((int) $user['activated_on']),
+                            'suspended' => (int) $user['suspended'],
                         ]
                     );
                 });
