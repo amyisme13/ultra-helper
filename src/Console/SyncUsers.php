@@ -49,7 +49,7 @@ class SyncUsers extends Command
     {
         $this->info('Syncing users...');
 
-        $maxPage = $this->service->getUsersMeta()->num_pages;
+        $maxPage = $this->helper->getUsersMeta()->num_pages;
 
         $bar = $this->output->createProgressBar($maxPage);
         $bar->start();
