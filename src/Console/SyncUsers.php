@@ -59,6 +59,11 @@ class SyncUsers extends Command
             try {
                 $users = $this->helper->getUsersPaginated($page);
                 $users->each(function ($user) {
+                    $activatedAt = null;
+                    if (!is_null($user['activated_on'] && !!$user['activated_on'])) {
+                        $activatedAt = Carbon::parse((int) $user['activated_on']);
+                    }
+
                     UltraUser::updateOrCreate(
                         ['username' => $user['user_id']],
                         [
@@ -72,12 +77,13 @@ class SyncUsers extends Command
                             'sub_area' => $user['sub_area'],
                             'costcenter' => $user['costcenter'],
                             'top_username' => $user['top_id'] ? $user['top_id'] : null,
-                            'activated_at' => Carbon::parse((int) $user['activated_on']),
+                            'activated_at' => $activatedAt,
                             'suspended' => (int) $user['suspended'],
                         ]
                     );
                 });
             } catch (\Exception $err) {
+                dd($err);
                 $this->error('Sync users failed on page ' . $page);
             }
 
