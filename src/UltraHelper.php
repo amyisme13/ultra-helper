@@ -5,6 +5,7 @@ namespace Amyisme13\UltraHelper;
 use Amyisme13\UltraHelper\Exceptions\AuthFailedException;
 use Amyisme13\UltraHelper\Exceptions\InvalidSignatureException;
 use Amyisme13\UltraHelper\Exceptions\UltraErrorException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -131,5 +132,47 @@ class UltraHelper
         }
 
         return (object) $response->json()['data']['meta'];
+    }
+
+    // TODO: Implement BOD
+    public function getBODs()
+    {
+        return collect(['Fake BOD']);
+    }
+
+    /**
+     * Get functions from ultra_users table
+     *
+     * @param string $filterBod
+     * @return \Illuminate\Support\Collection
+     */
+    public function getFunctions($filterBod = null)
+    {
+        return DB::table('ultra_users')
+            ->select('function')
+            ->distinct()
+            // ->when($filterBod, function ($query, $bod) {
+            //     $query->where('bod', $bod);
+            // })
+            ->get()
+            ->pluck('function');
+    }
+
+    /**
+     * Get divisions from ultra_users table
+     *
+     * @param string $filterFunc
+     * @return \Illuminate\Support\Collection
+     */
+    public function getDivisions($filterFunc = null)
+    {
+        return DB::table('ultra_users')
+            ->select('division')
+            ->distinct()
+            ->when($filterFunc, function ($query, $func) {
+                $query->where('function', $func);
+            })
+            ->get()
+            ->pluck('division');
     }
 }
