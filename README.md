@@ -25,7 +25,7 @@ Configure these environment variable
 
 ## Features
 
-### Users Sync
+### Users Sync (REMOVED ON v2.0)
 
 Sync ultra_users table with the current Ultra users
 
