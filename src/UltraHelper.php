@@ -5,6 +5,7 @@ namespace Amyisme13\UltraHelper;
 use Amyisme13\UltraHelper\Exceptions\AuthFailedException;
 use Amyisme13\UltraHelper\Exceptions\InvalidSignatureException;
 use Amyisme13\UltraHelper\Exceptions\UltraErrorException;
+use Amyisme13\UltraHelper\Exceptions\ValidationException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -164,7 +165,7 @@ class UltraHelper
         $password = config('ultra-helper.point_password');
 
         if (empty($event)) {
-            $event = config('ultra-helper.point_event');
+            $event = config('ultra-helper.point_event_name');
         }
 
         $response = Http::withBasicAuth($user, $password)
@@ -172,10 +173,11 @@ class UltraHelper
                 'full_name' => $name,
                 'nik' => $username,
                 'point' => $point,
+                'event' => $event,
             ]);
 
         if ($response->clientError()) {
-            throw new AuthFailedException(trim($response['data']));
+            throw new ValidationException($response['errors']);
         } else if ($response->serverError()) {
             throw new UltraErrorException();
         }
@@ -196,14 +198,14 @@ class UltraHelper
         $password = config('ultra-helper.point_password');
 
         if (empty($event)) {
-            $event = config('ultra-helper.point_event');
+            $event = config('ultra-helper.point_event_name');
         }
 
         $response = Http::withBasicAuth($user, $password)
             ->post($url, ['event' => $event]);
 
         if ($response->clientError()) {
-            throw new AuthFailedException(trim($response['data']));
+            throw new ValidationException($response['errors']);
         } else if ($response->serverError()) {
             throw new UltraErrorException();
         }
