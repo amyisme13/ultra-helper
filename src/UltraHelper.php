@@ -25,6 +25,21 @@ class UltraHelper
 
         return $baseUrl . $path;
     }
+    /**
+     * Get full valid point url
+     *
+     * @param string $path
+     * @return string
+     */
+    private function getPointUrl($path)
+    {
+        $baseUrl = config('ultra-helper.point_url');
+        if (!Str::endsWith($baseUrl, '/')) {
+            $baseUrl .= '/';
+        }
+
+        return $baseUrl . $path;
+    }
 
     /**
      * Generate signature hash for Ultra API
@@ -131,5 +146,68 @@ class UltraHelper
         }
 
         return (object) $response->json()['data']['meta'];
+    }
+
+    /**
+     * Add point to the given user.
+     *
+     * @param string $name
+     * @param string $username
+     * @param int $point
+     * @param string $event
+     * @return \Amyisme13\UltraHelper\Contracts\PointResponseData
+     */
+    public function addPoint($name, $username, $point, $event = '')
+    {
+        $url = $this->getPointUrl('add');
+        $user = config('ultra-helper.point_user');
+        $password = config('ultra-helper.point_password');
+
+        if (empty($event)) {
+            $event = config('ultra-helper.point_event');
+        }
+
+        $response = Http::withBasicAuth($user, $password)
+            ->post($url, [
+                'full_name' => $name,
+                'nik' => $username,
+                'point' => $point,
+            ]);
+
+        if ($response->clientError()) {
+            throw new AuthFailedException(trim($response['data']));
+        } else if ($response->serverError()) {
+            throw new UltraErrorException();
+        }
+
+        return (object) $response->json();
+    }
+
+    /**
+     * Reset point of event.
+     *
+     * @param string $event
+     * @return \Amyisme13\UltraHelper\Contracts\PointResponseData
+     */
+    public function resetPoint($event = '')
+    {
+        $url = $this->getPointUrl('add');
+        $user = config('ultra-helper.point_user');
+        $password = config('ultra-helper.point_password');
+
+        if (empty($event)) {
+            $event = config('ultra-helper.point_event');
+        }
+
+        $response = Http::withBasicAuth($user, $password)
+            ->post($url, ['event' => $event]);
+
+        if ($response->clientError()) {
+            throw new AuthFailedException(trim($response['data']));
+        } else if ($response->serverError()) {
+            throw new UltraErrorException();
+        }
+
+        return (object) $response->json();
     }
 }
