@@ -191,7 +191,7 @@ class UltraHelper
      */
     public function resetPoint($event = '')
     {
-        $url = $this->getPointUrl('add');
+        $url = $this->getPointUrl('reset');
         $user = config('ultra-helper.point_user');
         $password = config('ultra-helper.point_password');
 
