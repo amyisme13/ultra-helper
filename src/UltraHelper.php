@@ -93,10 +93,10 @@ class UltraHelper
         }
 
         return (object) [
-            'id' => $json->id,
-            'username' => $json->username,
-            'email' => $json->email,
-            'name' => $json->fullname,
+            'id' => $json->user->id,
+            'username' => $json->user->username,
+            'email' => $json->user->email,
+            'name' => $json->user->fullname,
         ];
     }
 
