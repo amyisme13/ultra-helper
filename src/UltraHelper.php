@@ -150,29 +150,76 @@ class UltraHelper
     }
 
     /**
+     * Return request client for ultra point
+     *
+     * @return \Illuminate\Http\Client\PendingRequest
+     */
+    private function getPointClient()
+    {
+        $user = config('ultra-helper.point_user');
+        $password = config('ultra-helper.point_password');
+        return Http::withBasicAuth($user, $password);
+    }
+
+    /**
      * Add point to the given user.
      *
      * @param string $name
      * @param string $username
      * @param int $point
+     * @param int $periodId
      * @param string $event
      * @return \Amyisme13\UltraHelper\Contracts\PointResponseData
      */
-    public function addPoint($name, $username, $point, $event = '')
+    public function addPoint($name, $username, $point, $periodId, $event = '')
     {
-        $url = $this->getPointUrl('add');
-        $user = config('ultra-helper.point_user');
-        $password = config('ultra-helper.point_password');
+        $url = $this->getPointUrl('api/points/add');
 
         if (empty($event)) {
             $event = config('ultra-helper.point_event_name');
         }
 
-        $response = Http::withBasicAuth($user, $password)
+        $response = $this
+            ->getPointClient()
             ->post($url, [
                 'full_name' => $name,
                 'nik' => $username,
                 'point' => $point,
+                'period_id' => $periodId,
+                'event' => $event,
+            ]);
+
+        if ($response->clientError()) {
+            dd($response->json());
+            throw new ValidationException($response['errors']);
+        } else if ($response->serverError()) {
+            throw new UltraErrorException();
+        }
+
+        return (object) $response->json();
+    }
+
+    /**
+     * Add point to the given user.
+     *
+     * @param int $id
+     * @param string $name
+     * @param string $event
+     * @return object
+     */
+    public function createPeriod($id, $name, $event = '')
+    {
+        $url = $this->getPointUrl('api/periods');
+
+        if (empty($event)) {
+            $event = config('ultra-helper.point_event_name');
+        }
+
+        $response = $this
+            ->getPointClient()
+            ->post($url, [
+                'id' => $id,
+                'name' => $name,
                 'event' => $event,
             ]);
 
@@ -186,23 +233,30 @@ class UltraHelper
     }
 
     /**
-     * Reset point of event.
+     * Add point to the given user.
      *
+     * @param int $id
+     * @param string $name
+     * @param bool $reset
      * @param string $event
-     * @return \Amyisme13\UltraHelper\Contracts\PointResponseData
+     * @return object
      */
-    public function resetPoint($event = '')
+    public function updatePeriod($id, $name, $reset = false, $event = '')
     {
-        $url = $this->getPointUrl('reset');
-        $user = config('ultra-helper.point_user');
-        $password = config('ultra-helper.point_password');
+        $url = $this->getPointUrl('api/periods');
 
         if (empty($event)) {
             $event = config('ultra-helper.point_event_name');
         }
 
-        $response = Http::withBasicAuth($user, $password)
-            ->post($url, ['event' => $event]);
+        $data = ['id' => $id, 'name' => $name, 'event' => $event];
+        if ($reset) {
+            $data['reset'] = 1;
+        }
+
+        $response = $this
+            ->getPointClient()
+            ->put($url, $data);
 
         if ($response->clientError()) {
             throw new ValidationException($response['errors']);
